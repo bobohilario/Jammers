@@ -10,20 +10,33 @@ Begin["`Private`"]
 
 dashboardlocation[league_]:=URLBuild[{leagueDir[league],"dashboard"}]
 
-DashboardNotebook[league_]:=Notebook[{
+JammerDashboard[league_]:=(
+PacletDataRebuild[];
+Notebook[{
 	leagueTitleCell[league],
 	linksCell[league],
 	Cell["Leaderboard","Section"],
-	leagueLeaderboard[league],
+	leagueLeaderboardGrid[league],
 	Cell["Game History","Section"],
 	leagueGameHistory[league]
-},System`ClickToCopyEnabled->False]
+},System`ClickToCopyEnabled->False])
 
 leagueTitleCell[league_]:=Cell[league,"Title"]
 
-leagueLeaderboard[league_]:=Cell[
-	BoxData[ToBoxes[Rasterize[Dataset[MapAt[N,getJammerData["Players",league],{All,"Handicap"}]]]]],"Output"]
 
+leagueLeaderboardGrid[league_]:=With[{data=getJammerData["Players",league]},
+	Cell[
+	BoxData[ToBoxes[
+		Style[Grid[Join[
+		{Style[#,16]&/@Prepend[Keys[First[data]],""]},
+		Join[Transpose[{Style[#,16]&/@Keys[data]}],Values/@Values[data],2]
+		],Alignment->Left,Frame->All],
+		FontFamily->"Source Sans Pro"
+		]
+		]],"Output"]
+]
+	
+	
 leagueGameHistory[league_]:=Cell[CellGroupData[
 	KeyValueMap[gameRow,getJammerData["Games",league]]
 ,Open],"Output"]
@@ -33,15 +46,17 @@ linksCell[league_]:=Cell[
 		{
 		Hyperlink["Add Player",URL["forms/newplayer"]],
 		
-		Hyperlink["Record Game",URL["forms/newgame"]]	
+		Hyperlink["Determine Handicaps",URL["forms/handicaps"]],
+		Hyperlink["Record Game Results",URL["forms/newgame"]]	
 			
 		}],
 		"Output"
 ]
 
-DeployDashboard[args___]:=deployDashboard[args]
-deployDashboard[league_]:=(DeleteObject[CloudObject[dashboardlocation[league]]];
-	CloudDeploy[DashboardNotebook[league],dashboardlocation[league],Permissions->"Public"])
+DeployDashboard[args___]:=deployJammerDashboard[args]
+deployJammerDashboard[league_]:=(DeleteObject[CloudObject[dashboardlocation[league]]];
+	Pause[1];
+	CloudDeploy[JammerDashboard[league],dashboardlocation[league],Permissions->"Public"])
 
 
 gameRow[game_,gameData_]:=

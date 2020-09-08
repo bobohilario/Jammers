@@ -15,7 +15,7 @@ handicapGame[league_,t1_,t2_]:=With[{data=getJammerData["Players",league]},
 updateHandicaps[league_]:=Block[{caps=computeHandicaps[league],playerdata=getJammerData["Players",league]},
 	playerdata=Association[KeyValueMap[#1->Association[#2,"Handicap"->Lookup[caps,#1,0]]&,playerdata]];
 	If[AssociationQ[playerdata],
-		updateJammerData["Players",league,newdata],
+		updateJammerData["Players",league,playerdata],
 		$Failed
 	]
 ]
