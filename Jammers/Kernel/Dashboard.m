@@ -22,7 +22,7 @@ DashboardNotebook[league_]:=Notebook[{
 leagueTitleCell[league_]:=Cell[league,"Title"]
 
 leagueLeaderboard[league_]:=Cell[
-	BoxData[ToBoxes[Dataset[getJammerData["Players",league]]]],"Output"]
+	BoxData[ToBoxes[Rasterize[Dataset[MapAt[N,getJammerData["Players",league],{All,"Handicap"}]]]]],"Output"]
 
 leagueGameHistory[league_]:=Cell[CellGroupData[
 	KeyValueMap[gameRow,getJammerData["Games",league]]
