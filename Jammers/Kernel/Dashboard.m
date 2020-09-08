@@ -2,7 +2,7 @@
 
 BeginPackage["Jammers`"]
 
-Jammers`DashboardNotebook
+Jammers`JammerDashboard
 
 Jammers`DeployDashboard
 
@@ -37,9 +37,14 @@ leagueLeaderboardGrid[league_]:=With[{data=getJammerData["Players",league]},
 ]
 	
 	
-leagueGameHistory[league_]:=Cell[CellGroupData[
-	KeyValueMap[gameRow,getJammerData["Games",league]]
-,Open],"Output"]
+leagueGameHistory[league_]:=With[{data=getJammerData["Games",league]},
+	If[Length[data]>0,
+	Cell[CellGroupData[
+		KeyValueMap[gameRow,getJammerData["Games",league]]
+	,Open],"Output"],
+	Nothing
+	]
+]
 	
 linksCell[league_]:=Cell[
 	BoxData@ToBoxes@Column[
@@ -54,9 +59,13 @@ linksCell[league_]:=Cell[
 ]
 
 DeployDashboard[args___]:=deployJammerDashboard[args]
-deployJammerDashboard[league_]:=(DeleteObject[CloudObject[dashboardlocation[league]]];
+deployJammerDashboard[league_]:=With[{co=CloudObject[dashboardlocation[league]]},
+	If[FileExistsQ[co],
+		DeleteObject[CloudObject[dashboardlocation[league]]]
+	];
 	Pause[1];
-	CloudDeploy[JammerDashboard[league],dashboardlocation[league],Permissions->"Public"])
+	CloudDeploy[JammerDashboard[league], co,Permissions->"Public"]
+]
 
 
 gameRow[game_,gameData_]:=
