@@ -26,7 +26,8 @@ updateJammerData[datatype_,league_,newdata_]:=Block[{olddata=getJammerData[datat
 		Put[data,file];
 		data
 		,
-		Put[newdata,file]
+		Put[newdata,file];
+		newdata
 	]
 ]
 	
@@ -37,27 +38,34 @@ backupJammerData[datatype_,league_]:=With[{file=jammerDataFile[datatype,league]}
 ]
 
 
-updatePlayersData[league_,KeyValuePattern[{"t1"->t1_,"t2"->t2_,"Score"->sc_}]]:=Block[{
-	handicapScores=handicapGame[league,Values@t1,Values@t2],diff},
-	(* if diff > 0 team 2 wins *)
-	diff=(handicapScores[[1]]-sc["t1"])-(handicapScores[[2]]-sc["t2"]);
-	updatePlayerData[league,diff,#]&/@Values[t1];
-	updatePlayerData[league,-diff,#]&/@Values[t2];
+updatePlayersRecords[league_,KeyValuePattern[{"t1"->t1_,"t2"->t2_,"Score"->sc_,"Winner"->win_}]]:=Block[{},
+Put[win,"debugLog"];
+	updatePlayerRecords[league,win==="Team 1",#]&/@Values[t1];
+	updatePlayerRecords[league,win==="Team 2",#]&/@Values[t2];
 	
 ]
 
-updatePlayerData[league_,difference_,player_]:=Block[{data=getJammerData["Players",league][player]},
+$editinggame=False;
+updatePlayerRecords[league_,win_,player_]:=Block[{data=getJammerData["Players",league][player]},
+PutAppend["w"->win,"debugLog"];
 	data["Games"]=data["Games"]+1;
-	If[difference>0,
+	data["LastGame"->Now];
+	If[TrueQ[win],
+		data["Wins"]=data["Wins"]+1,
 		data["Losses"]=data["Losses"]+1;
-		,
-		data["Wins"]=data["Wins"]+1;
 	];
-	data["Handicap"]=data["Handicap"]+difference/4;
-	
 	updateJammerData["Players",league,<|player->data|>]
-	
-]
+]/;!TrueQ[$editinggame]
+
+updatePlayerRecords[league_,win_,player_]:=Block[{data=getJammerData["Players",league][player]},
+	If[TrueQ[win],
+		data["Wins"]=data["Wins"]+1;
+		data["Losses"]=data["Losses"]-1;,
+		data["Losses"]=data["Losses"]+1;
+		data["Wins"]=data["Wins"]-1;
+	];
+	updateJammerData["Players",league,<|player->data|>]
+]/;TrueQ[$editinggame]
 
 $newPlayerData=<|"Games"->0,"Wins"->0,"Losses"->0,"Handicap"->0,"LastGame"->0|>;
 

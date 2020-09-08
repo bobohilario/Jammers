@@ -4,6 +4,8 @@ BeginPackage["Jammers`"]
 
 Jammers`DeployCode
 Jammers`DeployGameForm
+Jammers`DeployHandicapForm
+Jammers`DeployEditGameForm
 Jammers`DeployPlayerForm
 
 Jammers`CreateLeague
@@ -36,17 +38,19 @@ DeployGameForm[league_]:=With[{dumpfile=$dumppath,l=league},
 		FormFunction[{
 		{"t1","Team 1"}->CompoundElement[{"player1" -> players, "player2" -> players}],
 		{"t2","Team 2"}->CompoundElement[{"player1" -> players, "player2" -> players}],
-		"Score"->CompoundElement[{{"t1","Team 1"} -> "Integer", {"t2","Team 2"} -> "Integer"}]
+		"Score"->CompoundElement[{{"t1","Team 1"} -> "Integer", {"t2","Team 2"} -> "Integer"}],
+		"Winner"->{"Team 1","Team 2"}
 	},
 		(
 		Clear["Jammers`","Jammers`Private`"];
 		Get[dumpfile];
 		With[{n=gameCount[l]},
 			updateJammerData["Games",l,<|(n+1)->#|>];
-			updatePlayersData[l,#];
+			updatePlayersRecords[l,#];
+			updateHandicaps[league];
 		
-		HTTPRedirect[deployDashboard[league]]
-		];
+		HTTPRedirect[deployJammerDashboard[league]]
+		]
 		)&,
 		AppearanceRules->{"Title"->"Record Game Results"}
 	]]],
@@ -54,6 +58,71 @@ DeployGameForm[league_]:=With[{dumpfile=$dumppath,l=league},
 	]
 ]
 
+
+DeployEditGameForm[league_]:=With[{dumpfile=$dumppath,l=league},
+	CloudDeploy[
+		APIFunction[{"game"->"Integer"},
+		(Clear["Jammers`","Jammers`Private`"];
+		Get[dumpfile];
+		With[{players=playerList[l],g=#game,data=getJammerData["Games",l][#game]},
+		
+		FormFunction[{
+		{"t1","Team 1"}-><|"Interpreter" -> 
+		  CompoundElement[{"player1" -> players, "player2" -> players}], 
+		 "Input" -> data["t1"]
+		 |>,
+		{"t2","Team 2"}-><|"Interpreter" -> 
+		  CompoundElement[{"player1" -> players, "player2" -> players}], 
+		 "Input" -> data["t2"]
+		 |>,
+		"Score"-><|"Interpreter" -> 
+		  CompoundElement[{{"t1","Team 1"} -> "Integer", {"t2","Team 2"} -> "Integer"}], 
+		 "Input" -> data["Score"]
+		 |>,
+		"Winner"-><|"Interpreter" ->{"Team 1","Team 2"}, 
+		 "Input" -> data["Winner"]
+		 |>
+		},
+			(
+			Clear["Jammers`","Jammers`Private`"];
+			Get[dumpfile];
+			Block[{$editinggame=True,$oldwinner=data["Winner"]},
+				updateJammerData["Games",l,<|g->#|>];
+				If[data["Winner"]=!=#Winner,
+					updatePlayersRecords[l,#]
+				];
+				updateHandicaps[l];
+				HTTPRedirect[deployJammerDashboard[league]]
+			]
+			)&,
+			AppearanceRules->{"Title"->"Edit Game Results"}
+			]
+		])&],
+	URLBuild[{leagueDir[l],"forms","editgame"}],Permissions->"Public"
+	]
+]
+
+DeployHandicapForm[league_]:=With[{dumpfile=$dumppath,l=league},
+	CloudDeploy[Delayed[
+		Clear["Jammers`","Jammers`Private`"];
+		Get[dumpfile];
+		With[{players=playerList[league]},
+		
+		FormFunction[{
+		{"t1","Team 1"}->CompoundElement[{"player1" -> players, "player2" -> players}],
+		{"t2","Team 2"}->CompoundElement[{"player1" -> players, "player2" -> players}]
+	},
+		(
+		Clear["Jammers`","Jammers`Private`"];
+		Get[dumpfile];
+		AssociationThread[{"Team 1 Target","Team 2 Target"},handicapGame[league,Values[#t1],Values[#t2]]]
+		
+		)&,
+		AppearanceRules->{"Title"->"Record Game Results"}
+	]]],
+	URLBuild[{leagueDir[l],"forms","handicaps"}],Permissions->"Public"
+	]
+]
 
 
 DeployPlayerForm[league_]:=With[{dumpfile=$dumppath},
@@ -64,8 +133,7 @@ DeployPlayerForm[league_]:=With[{dumpfile=$dumppath},
 		Clear["Jammers`","Jammers`Private`"];
 		Get[dumpfile];
 		updateJammerData["Players",league,<|#Name->$newPlayerData|>];
-		
-		HTTPRedirect[deployDashboard[league]]
+		HTTPRedirect[deployJammerDashboard[league]]
 		
 		)&,
 		AppearanceRules->{"Title"->"Add a new player"}
