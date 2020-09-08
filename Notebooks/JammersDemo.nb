@@ -1,0 +1,180 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1064,         20]
+NotebookDataLength[      5821,        159]
+NotebookOptionsPosition[      5287,        138]
+NotebookOutlinePosition[      5682,        154]
+CellTagsIndexPosition[      5639,        151]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"PacletDirectoryLoad", "[", 
+  RowBox[{"FileNameDrop", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.808435940460671*^9, 3.808435950637958*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"09658d6b-5950-4e9c-a698-54f80ce25109"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"/Users/bobs/wolfram-workspace/stash/bobs/BobDevTools/Bob\"\>", 
+   ",", "\<\"/Users/bobs/wolfram-workspace/stash/Jammers\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.8084359510834913`*^9},
+ CellLabel->"Out[24]=",ExpressionUUID->"723a2abe-9a46-496a-98c0-e08d32149c9e"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"<<", "Jammers`"}]], "Input",
+ CellChangeTimes->{{3.808435952201474*^9, 3.8084359549610157`*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"03cb5d32-5ed0-4567-961d-1254541004ea"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Jammers`CreateLeague", "[", "\"\<Test1\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.808435960322414*^9, 3.808435968123983*^9}},
+ CellLabel->"In[28]:=",ExpressionUUID->"7c67912e-3780-4686-a480-e3086901b8b3"],
+
+Cell[BoxData["\<\"/wolframcloud/userfiles/56f/56ff39bd-323c-481b-a7e4-\
+6df0dd549816/Jammers/41f2fcea66a932f5\"\>"], "Output",
+ CellChangeTimes->{{3.808435969652793*^9, 3.8084359894610558`*^9}},
+ CellLabel->"Out[28]=",ExpressionUUID->"6a3dac07-43ea-420b-b067-814d260f7125"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DeployCode", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.8084360002290087`*^9, 3.808436000230076*^9}},
+ CellLabel->"In[52]:=",ExpressionUUID->"a7c35c70-92f4-42f3-bc06-6976eb2db9b5"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Jammers`\"\>", ",", "\<\"Jammers`Private`\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.8084360010877743`*^9, {3.8084360500352507`*^9, 3.808436066623098*^9}, 
+   3.80843617413888*^9, 3.808436214200405*^9, 3.808436256218351*^9, 
+   3.808436435528532*^9, 3.808436492130678*^9, 3.808436569258606*^9},
+ CellLabel->"Out[52]=",ExpressionUUID->"1a4ba6ab-458e-4cb2-9171-bb4aadba8a21"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"co", "=", 
+  RowBox[{"Jammers`DeployGameForm", "[", "\"\<Test1\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.808436518553258*^9, 3.808436525007594*^9}},
+ CellLabel->"In[50]:=",ExpressionUUID->"42d9a93e-9325-4dde-b6a6-b9d35f41f37b"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"CloudObject", "[", 
+   TemplateBox[{
+    "\"https://www.wolframcloud.com/obj/bobs/Jammers/41f2fcea66a932f5/forms/\
+newgame\"", 
+     "https://www.wolframcloud.com/obj/bobs/Jammers/41f2fcea66a932f5/forms/\
+newgame"},
+    "HyperlinkURL"], "]"}],
+  CloudObject[
+  "https://www.wolframcloud.com/obj/bobs/Jammers/41f2fcea66a932f5/forms/\
+newgame"],
+  SelectWithContents->True]], "Output",
+ CellChangeTimes->{{3.8084365199931393`*^9, 3.808436525511032*^9}},
+ CellLabel->"Out[50]=",ExpressionUUID->"0d364d24-bb38-43a7-807e-d89a7f3cbb80"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"co", "=", 
+  RowBox[{"Jammers`DeployPlayerForm", "[", "\"\<Test1\>\"", "]"}]}]], "Input",\
+
+ CellChangeTimes->{{3.8084365461393833`*^9, 3.8084365476432323`*^9}},
+ CellLabel->"In[55]:=",ExpressionUUID->"c0119c94-3d94-4ac3-89ab-33ba427d3d67"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"CloudObject", "[", 
+   TemplateBox[{
+    "\"https://www.wolframcloud.com/obj/bobs/Jammers/41f2fcea66a932f5/forms/\
+newplayer\"", 
+     "https://www.wolframcloud.com/obj/bobs/Jammers/41f2fcea66a932f5/forms/\
+newplayer"},
+    "HyperlinkURL"], "]"}],
+  CloudObject[
+  "https://www.wolframcloud.com/obj/bobs/Jammers/41f2fcea66a932f5/forms/\
+newplayer"],
+  SelectWithContents->True]], "Output",
+ CellChangeTimes->{3.80843657039787*^9, 3.8084368510891733`*^9},
+ CellLabel->"Out[55]=",ExpressionUUID->"3559fda1-e9b8-47ce-8bbf-cbfacfe7524d"]
+}, Open  ]]
+},
+WindowSize->{1007, 857},
+WindowMargins->{{323, Automatic}, {38, Automatic}},
+FrontEndVersion->"12.1 for Mac OS X x86 (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8009352b-4ae4-4b9e-8152-f830177967a1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[1486, 35, 296, 5, 30, "Input",ExpressionUUID->"09658d6b-5950-4e9c-a698-54f80ce25109"],
+Cell[1785, 42, 316, 6, 34, "Output",ExpressionUUID->"723a2abe-9a46-496a-98c0-e08d32149c9e"]
+}, Open  ]],
+Cell[2116, 51, 199, 3, 30, "Input",ExpressionUUID->"03cb5d32-5ed0-4567-961d-1254541004ea"],
+Cell[CellGroupData[{
+Cell[2340, 58, 230, 3, 30, "Input",ExpressionUUID->"7c67912e-3780-4686-a480-e3086901b8b3"],
+Cell[2573, 63, 273, 3, 34, "Output",ExpressionUUID->"6a3dac07-43ea-420b-b067-814d260f7125"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2883, 71, 205, 3, 30, "Input",ExpressionUUID->"a7c35c70-92f4-42f3-bc06-6976eb2db9b5"],
+Cell[3091, 76, 427, 8, 34, "Output",ExpressionUUID->"1a4ba6ab-458e-4cb2-9171-bb4aadba8a21"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3555, 89, 256, 4, 30, "Input",ExpressionUUID->"42d9a93e-9325-4dde-b6a6-b9d35f41f37b"],
+Cell[3814, 95, 575, 14, 37, "Output",ExpressionUUID->"0d364d24-bb38-43a7-807e-d89a7f3cbb80"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4426, 114, 264, 5, 30, "Input",ExpressionUUID->"c0119c94-3d94-4ac3-89ab-33ba427d3d67"],
+Cell[4693, 121, 578, 14, 37, "Output",ExpressionUUID->"3559fda1-e9b8-47ce-8bbf-cbfacfe7524d"]
+}, Open  ]]
+}
+]
+*)
+
