@@ -118,7 +118,7 @@ DeployHandicapForm[league_]:=With[{dumpfile=$dumppath,l=league},
 		AssociationThread[{"Team 1 Target","Team 2 Target"},handicapGame[league,Values[#t1],Values[#t2]]]
 		
 		)&,
-		AppearanceRules->{"Title"->"Record Game Results"}
+		AppearanceRules->{"Title"->"Determine Handicap"}
 	]]],
 	URLBuild[{leagueDir[l],"forms","handicaps"}],Permissions->"Public"
 	]
