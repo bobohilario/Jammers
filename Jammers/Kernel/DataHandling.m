@@ -69,6 +69,8 @@ updatePlayerRecords[league_,win_,player_]:=Block[{data=getJammerData["Players",l
 
 $newPlayerData=<|"Games"->0,"Wins"->0,"Losses"->0,"Handicap"->0,"LastGame"->0|>;
 
+
+
 End[]
 
 EndPackage[]

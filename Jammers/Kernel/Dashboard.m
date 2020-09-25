@@ -52,6 +52,7 @@ linksCell[league_]:=Cell[
 		Hyperlink[Style["Add Player",20],URL["forms/newplayer"]],
 		
 		Hyperlink[Style["Determine Handicaps",20],URL["forms/handicaps"]],
+		Hyperlink[Style["Random Matchup",20],URL["forms/matchup"]],
 		Hyperlink[Style["Record Game Results",20],URL["forms/newgame"]]	
 			
 		}],

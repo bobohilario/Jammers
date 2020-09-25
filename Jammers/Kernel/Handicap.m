@@ -4,13 +4,11 @@ BeginPackage["Jammers`"]
 
 Begin["`Private`"] 
 
-handicapGame[league_,t1_,t2_]:=With[{data=getJammerData["Players",league]},
-	21+{round@Total[Lookup[Lookup[data,t1,<||>],"Handicap",0]],
-		round@Total[Lookup[Lookup[data,t2,<||>],"Handicap",0]]
+handicapGame[league_,t1_,t2_]:=handicapgame[getJammerData["Players",league],t1,t2]
+	
+handicapgame[playedata_,t1_,t2_]:=21+{round@Total[Lookup[Lookup[playedata,t1,<||>],"Handicap",0]],
+		round@Total[Lookup[Lookup[playedata,t2,<||>],"Handicap",0]]
 	}
-	
-]
-	
 	
 updateHandicaps[league_]:=Block[{caps=computeHandicaps[league],playerdata=getJammerData["Players",league]},
 	playerdata=Association[KeyValueMap[#1->Association[#2,"Handicap"->Lookup[caps,#1,0]]&,playerdata]];
@@ -36,6 +34,10 @@ computeHandicaps[{caps_,games_},KeyValuePattern[{"t1"->t1_,"t2"->t2_,"Score"->sc
 	{new,g}
 ]
 
+
+chooseRandomGame[current_,playerdata_]:=With[{r=Partition[RandomSample[current, 4], 2]},
+AssociationThread[{r[[1]],r[[2]]},handicapgame[playerdata,r[[1]],r[[2]]]]
+]
 
 End[]
 
