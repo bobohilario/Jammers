@@ -24,7 +24,7 @@ Notebook[{
 leagueTitleCell[league_]:=Cell[league,"Title"]
 
 
-leagueLeaderboardGrid[league_]:=With[{data=getJammerData["Players",league]},
+leagueLeaderboardGrid[league_]:=With[{data=MapAt[N, ReverseSortBy[getJammerData["Players",league], #Handicap &], {All, "Handicap"}]},
 	Cell[
 	BoxData[ToBoxes[
 		Style[Grid[Join[
@@ -49,10 +49,10 @@ leagueGameHistory[league_]:=With[{data=getJammerData["Games",league]},
 linksCell[league_]:=Cell[
 	BoxData@ToBoxes@Column[
 		{
-		Hyperlink["Add Player",URL["forms/newplayer"]],
+		Hyperlink[Style["Add Player",20],URL["forms/newplayer"]],
 		
-		Hyperlink["Determine Handicaps",URL["forms/handicaps"]],
-		Hyperlink["Record Game Results",URL["forms/newgame"]]	
+		Hyperlink[Style["Determine Handicaps",20],URL["forms/handicaps"]],
+		Hyperlink[Style["Record Game Results",20],URL["forms/newgame"]]	
 			
 		}],
 		"Output"
@@ -73,10 +73,10 @@ gameRow[game_,gameData_]:=
 		Row[{
 			Style["Game ",FontFamily->"Source Sans Pro"],
 			game,": ",
-			Style[StringRiffle[Values[gameData["t1"]]," & "],FontFamily->"Source Sans Pro"]," ",
+			Style[StringRiffle[Values[gameData["t1"]]," & "],FontFamily->"Source Sans Pro",If[gameData["Winner"]==="Team 1",Bold,Plain]]," ",
 			Style[gameData["Score"]["t1"],Bold,16],
 			" - ",
-			Style[StringRiffle[Values[gameData["t2"]]," & "], FontFamily->"Source Sans Pro"]," ",
+			Style[StringRiffle[Values[gameData["t2"]]," & "], FontFamily->"Source Sans Pro",If[gameData["Winner"]==="Team 2",Bold,Plain]]," ",
 			Style[gameData["Score"]["t2"],Bold,16],"   ",
 			Hyperlink["Edit \[RightGuillemet]",URL["forms/editgame?game="<>ToString[game]]]
 			
