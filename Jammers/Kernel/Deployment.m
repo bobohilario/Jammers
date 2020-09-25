@@ -8,6 +8,7 @@ Jammers`DeployHandicapForm
 Jammers`DeployEditGameForm
 Jammers`DeployPlayerForm
 
+Jammers`RandomGameForm
 Jammers`CreateLeague
 
 
@@ -141,6 +142,31 @@ DeployPlayerForm[league_]:=With[{dumpfile=$dumppath},
 	URLBuild[{leagueDir[league],"forms","newplayer"}],Permissions->"Public"
 	]
 ]
+
+
+Jammers`RandomGameForm[league_]:=With[{dumpfile=$dumppath},
+	CloudDeploy[
+	Delayed[
+		(
+		Clear["Jammers`","Jammers`Private`"];
+		Get[dumpfile];
+		
+		With[{playerdata=getJammerData["Players",league],chosen=Lookup[getJammerData["CurrentPlayers",league],"CurrentPlayers",{}]},
+			FormFunction[{"p"-><|"Interpreter" -> AnySubset[Keys[playerdata]], "Input" -> chosen|>},
+				(updateJammerData["CurrentPlayers",league,<|"CurrentPlayers"->#p|>];
+				chooseRandomGame[#p,playerdata])&
+				,
+				AppearanceRules->{"Title"->"Create a Random Matchup"}
+			]
+		
+		]
+		
+		)
+	],
+	URLBuild[{leagueDir[league],"forms","matchup"}],Permissions->"Public"
+	]
+]
+
 
 Jammers`CreateLeague[l_]:=CloudEvaluate[createLeague[l]]
 
